@@ -24,7 +24,6 @@
   }
 
   .content {
-    border: 1px solid cornflowerblue;
     overflow: auto;
     flex-grow: 1;
   }
