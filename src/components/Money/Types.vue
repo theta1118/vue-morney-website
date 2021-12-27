@@ -9,29 +9,43 @@
   </div>
 </template>
 
-<script>
-  export default {
-  name: 'Types',
-    props:['xxx'], //1、外部属性
-    data(){ //1、内部属性
-      return{
-        type:'-'// '-'表示支出，'+'表示收入
+<script lang="ts">
+  import Vue from 'vue';//用到了vue,就必须倒入vue
+  import {Component} from "vue-property-decorator";
+
+  @Component //它的作用就是告诉下面的东西是vue的组件
+  export default class Types extends Vue{
+    type = '-' //赋值语句会自动变成实例属性 // '-'表示支出，'+'表示收入
+    selectType(type:string){//type只能是'-'和'+'中的一个
+      if(type !== '-' && type !==  '+'){
+        throw new Error('type is unknown');
       }
-    },
-    mounted() { //4、生命周期
-      console.log(this.xxx)
-    },
-    methods:{ //3、方法
-      selectType(type){ //type只能是'-'和'+'中的一个
-        if(type !=='-' && type !=='+'){
-          throw new Error('type is unknown')
-        }
-        this.type = type
-      }
+      this.type = type;
     }
+  }
+//   export default {
+//   name: 'Types',
+//     props:['xxx'], //1、外部属性
+//     data(){ //1、内部属性
+//       return{
+//         type:'-'// '-'表示支出，'+'表示收入
+//       }
+//     },
+//     mounted() { //4、生命周期
+//       console.log(this.xxx)
+//     },
+//     methods:{ //3、方法
+//       selectType(type){ //type只能是'-'和'+'中的一个
+//         if(type !=='-' && type !=='+'){
+//           throw new Error('type is unknown')
+//         }
+//         this.type = type
+//       }
+//     }
+//
+//
+// }
 
-
-}
 </script>
 
 <style lang="scss" scoped>
