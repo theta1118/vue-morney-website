@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';//用到了vue,就必须倒入vue
+  import Vue from 'vue';//用到了vue,就必须导入vue
   import {Component,Prop} from "vue-property-decorator";
 
   @Component //它的作用就是告诉下面的东西是vue的组件
