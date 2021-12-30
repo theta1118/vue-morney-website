@@ -26,11 +26,12 @@
 
   @Component
   export default class NumberPad extends Vue {
-    output: string ='0';
+    @Prop() readonly value!:number;
+    output = this.value.toString();
 
     inputContent(event: MouseEvent){
       const button = (event.target as HTMLButtonElement);
-      const input = button.textContent!; //as string相当于!
+      const input = button.textContent!; //as string相当于感叹号  !
       if(this.output.length === 16){return;}
       if(this.output === '0'){
         if('0123456789'.indexOf(input)>=0){
@@ -58,6 +59,7 @@
     ok(){
       this.$emit('update:value',this.output);
       this.$emit('submit',this.output)
+      this.output='0';
     }
   }
 </script>
