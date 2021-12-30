@@ -60,7 +60,7 @@
   })
   export default class Money extends Vue{
       tags=['衣','食','住','行','彩票'];
-      recordList: Record[]=JSON.parse(window.localStorage.getItem('recordList') ||'[]');
+      recordList: Record[]= recordList;
       record: Record ={
         tags:[],notes:'',type:'-',amount:0
       };
