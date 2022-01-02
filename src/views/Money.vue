@@ -19,20 +19,26 @@
   import Notes from '@/components/Money/Notes.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component, Watch} from 'vue-property-decorator';
+  import model from '@/model';
+
+  // const {model} = require('@/model.js');//在ts里面引入js,析构语法
+  // console.log(model);
+
+const recordList = model.fetch();
 
   //创建版本号，为了做数据迁移作准备
-  const version = window.localStorage.getItem('version') || '0';
-  const recordList: Record[]=JSON.parse(window.localStorage.getItem('recordList') ||'[]');
-
-    if(version==='0.0.1'){
-      //数据库升级，数据库迁移
-      recordList.forEach(record=>{
-        record.createdAt = new Date(2021,0,1);
-      });
-      //保存数据
-      window.localStorage.setItem('recordList',JSON.stringify(recordList));
-    }
-  window.localStorage.setItem('version','0.0.2');
+  // const version = window.localStorage.getItem('version') || '0';
+  // const recordList: Record[]=JSON.parse(window.localStorage.getItem('recordList') ||'[]');
+  //
+  //   if(version==='0.0.1'){
+  //     //数据库升级，数据库迁移
+  //     recordList.forEach(record=>{
+  //       record.createdAt = new Date(2021,0,1);
+  //     });
+  //     //保存数据
+  //     window.localStorage.setItem('recordList',JSON.stringify(recordList));
+  //   }
+  // window.localStorage.setItem('version','0.0.2');
 
   //如何在ts里面声明一个类型
 
@@ -44,24 +50,14 @@
   //   amount:100
   // }
 
-  type Record = {
-    //key:类型
-    //如果有初始值，就不用加类型
-    tags:string[]
-    notes:string
-    type:string
-    amount:number  //除了写数据类型（七种），也可以写类，在js里面，类也叫做构造函数
-    createdAt?:Date; //类 /构造函数，createdAt可以不存在
-    // createdAt:Date | undefined;//也可以写成上面那种方式
-  }
 
   @Component({
     components: {Tags, Notes, Types, NumberPad},
   })
   export default class Money extends Vue{
       tags=['衣','食','住','行','彩票'];
-      recordList: Record[]= recordList;
-      record: Record ={
+      recordList: RecordItem[]= recordList;
+      record: RecordItem ={
         tags:[],notes:'',type:'-',amount:0
       };
 
@@ -73,7 +69,7 @@
     }
 
     saveRecord(){
-      const record2: Record = JSON.parse(JSON.stringify(this.record));
+      const record2: RecordItem = model.clone(this.record);
       record2.createdAt = new Date();
       this.recordList.push(record2);
       // localStorage.set('recordList',JSON.stringify(this.recordList));
@@ -85,7 +81,7 @@
 
     @Watch('recordList')
     onRecordListChange(){
-      window.localStorage.setItem('recordList',JSON.stringify(this.recordList));
+      model.save(this.recordList);
     }
   }
 </script>
