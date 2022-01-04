@@ -4,7 +4,9 @@
 <!--    触发这个submit的点击事件-->
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
-    <Notes @update:value="onUpdateNotes"/>
+    <Notes filed-name="备注"
+           placeholder="在这里输入备注"
+           @update:value="onUpdateNotes"/>
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
 <!--    sync的作用：-->
 <!--    加上.sync这个修饰符，如果你触发了'update:dataSource'-->
