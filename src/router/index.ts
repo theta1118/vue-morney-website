@@ -27,7 +27,7 @@ const routes= [
     component:Statistics
   },
   {
-   path: '/labels/edit',
+   path: '/labels/edit/:id',//表示我edit后面会有一个字符串，但是又确定字符串的长度，只是占位
    component: EditLabel
   },
   {
