@@ -1,15 +1,17 @@
 <template>
   <Layout>
     <div class="navBar">
-      <Icon class="leftIcon" name="left"/>
+      <Icon class="leftIcon" name="left" @click="goBack"/>
       <span class="title">标签编辑</span>
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-    <FormItem :value="tag.name" filed-name="标签名" placeholder="请输入标签名"/>
+    <FormItem :value="tag.name"
+              @update:value="update"
+              filed-name="标签名" placeholder="请输入标签名"/>
     </div>
     <div class="button-wrapper">
-      <Button>删除标签</Button>
+      <Button @click="remove">删除标签</Button>
     </div>
   </Layout>
 
@@ -25,7 +27,7 @@ import FormItem from '@/components/Money/FormItem.vue';
   components: {FormItem}
 })
 export default class EditLabel extends Vue{
-  tag?: {id:string,name:string} = undefined//?的意思是tag可以为空
+  tag?: {id:string,name:string} = undefined;//?的意思是tag可以为空
 
   created(){
     const id = this.$route.params.id
@@ -38,8 +40,20 @@ export default class EditLabel extends Vue{
       this.$router.replace('/404');//防止用户不能回退，不使用push,使用replace
     }
   }
+  update(name:string){
+    if(this.tag){
+      tagListModel.update(this.tag.id,name);
+    }
+  }
+  remove(){
+    if(this.tag){
+      tagListModel.remove(this.tag.id);
+    }
+  }
+  goBack(){
+    this.$router.back();
+  }
 }
-
 </script>
 
 <style lang="scss" scoped>
