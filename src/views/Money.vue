@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-<!--    {{recordList}}-->
+    {{recordList}}
 <!--    触发这个submit的点击事件-->
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
