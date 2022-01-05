@@ -74,9 +74,7 @@ const tagList = tagListModel.fetch();
     }
 
     saveRecord(){
-      const record2: RecordItem = recordListModel.clone(this.record);
-      record2.createdAt = new Date();
-      this.recordList.push(record2);
+      recordListModel.create(this.record);
       // localStorage.set('recordList',JSON.stringify(this.recordList));
       //把recordList保存到localstorage里面就可以了
       //用JSON.stringify把它序列化一下，把recordList序列化一下，但是这个方法不太好
@@ -86,7 +84,7 @@ const tagList = tagListModel.fetch();
 
     @Watch('recordList')
     onRecordListChange(){
-      recordListModel.save(this.recordList);
+      recordListModel.save();
     }
   }
 </script>
