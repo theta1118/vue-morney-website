@@ -5,7 +5,7 @@
       <input type="text"
              :value="value"
              @input="onValueChanged($event.target.value)"
-            :placeholder="this.placeholder">
+            :placeholder="placeholder">
     </label>
   </div>
 </template>
@@ -22,7 +22,7 @@
     @Prop() placeholder?:string;
 
     //watch只会在变化的时候才会触发
-    @Watch('value')
+    // @Watch('value')//这行删掉的原因是，因为input的值一旦被用户变化，就会触发@update:value事件，所以就没有必要再加一个watch了
       onValueChanged(value:string){
         this.$emit('update:value',value);
       }
