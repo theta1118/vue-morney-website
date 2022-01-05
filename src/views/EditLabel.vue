@@ -26,6 +26,7 @@ import FormItem from '@/components/Money/FormItem.vue';
 @Component({
   components: {FormItem}
 })
+
 export default class EditLabel extends Vue{
   tag?: {id:string,name:string} = undefined;//?的意思是tag可以为空
 
@@ -40,16 +41,23 @@ export default class EditLabel extends Vue{
       this.$router.replace('/404');//防止用户不能回退，不使用push,使用replace
     }
   }
+
   update(name:string){
     if(this.tag){
       tagListModel.update(this.tag.id,name);
     }
   }
+
   remove(){
     if(this.tag){
-      tagListModel.remove(this.tag.id);
+      if(tagListModel.remove(this.tag.id)){
+        this.$router.back();
+      }else{
+        window.alert('删除失败');
+      }
     }
   }
+
   goBack(){
     this.$router.back();
   }

@@ -10,7 +10,8 @@
     </div>
     <div class="createTag-wrapper">
       <Button class="createTag"
-              @click="createTag">新建标签
+              @click="createTag">
+        新建标签
       </Button>
     </div>
   </Layout>

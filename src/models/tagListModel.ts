@@ -1,5 +1,6 @@
-import index from '@/store';
+// import index from '@/store';
 import deleteProperty = Reflect.deleteProperty;
+import createId from '@/lib/createId';
 
 const localStorageKeyName = 'tagList';
 type Tag ={
@@ -20,13 +21,14 @@ const tagListModel: TagListModel = {
     this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]');
     return this.data;
     },
-    create(name:string){
+  create(name:string){
     // this.data = [{id:'1',name:'1'},{id:'2',name:'2']
-      const names = this.data.map(item=>item.name);
+    const names = this.data.map(item=>item.name);
     if(names.indexOf(name)>=0){return 'duplicated';}
-    this.data.push({id:name,name:name});
-      this.save();
-      return 'success';
+    const id = createId().toString();
+    this.data.push({id,name:name});
+    this.save();
+    return 'success';
   },
   update(id:string,name:string){
     const idList = this.data.map(item => item.id);
