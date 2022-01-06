@@ -29,7 +29,6 @@
   // console.log(model);
 
 const recordList = recordListModel.fetch();
-const tagList = tagListModel.fetch();
 
   //创建版本号，为了做数据迁移作准备
   // const version = window.localStorage.getItem('version') || '0';
@@ -60,7 +59,7 @@ const tagList = tagListModel.fetch();
     components: {Tags,FormItem,Types, NumberPad},
   })
   export default class Money extends Vue{
-      tags = tagList;
+      tags = window.tagList;
       recordList: RecordItem[]= recordList;
       record: RecordItem ={
         tags:[],notes:'',type:'-',amount:0
