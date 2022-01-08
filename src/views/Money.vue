@@ -23,7 +23,6 @@
   import Tags from '@/components/Money/Tags.vue';
   import {Component, Watch} from 'vue-property-decorator';
   import recordListModel from '@/models/recordListModel';
-  import tagListModel from '@/models/tagListModel';
 
   // const {model} = require('@/model.js');//在ts里面引入js,析构语法
   // console.log(model);
