@@ -21,13 +21,10 @@
   import Types from '@/components/Money/Types.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
-  import {Component, Watch} from 'vue-property-decorator';
-  import recordListModel from '@/models/recordListModel';
+  import {Component} from 'vue-property-decorator';
 
   // const {model} = require('@/model.js');//在ts里面引入js,析构语法
   // console.log(model);
-
-const recordList = recordListModel.fetch();
 
   //创建版本号，为了做数据迁移作准备
   // const version = window.localStorage.getItem('version') || '0';
@@ -59,7 +56,7 @@ const recordList = recordListModel.fetch();
   })
   export default class Money extends Vue{
       tags = window.tagList;
-      recordList: RecordItem[]= recordList;
+      recordList = window.window.recordList;
       record: RecordItem ={
         tags:[],notes:'',type:'-',amount:0
       };
@@ -72,17 +69,12 @@ const recordList = recordListModel.fetch();
     }
 
     saveRecord(){
-      recordListModel.create(this.record);
+      window.createRecord(this.record);
       // localStorage.set('recordList',JSON.stringify(this.recordList));
       //把recordList保存到localstorage里面就可以了
       //用JSON.stringify把它序列化一下，把recordList序列化一下，但是这个方法不太好
       // 如果你在别的地方点击，不一定会保存，所以使用 @watch 方法更好
       //record2拥有和record完全一样的属性，保存的时候永远保存的是它的副本
-    }
-
-    @Watch('recordList')
-    onRecordListChange(){
-      recordListModel.save();
     }
   }
 </script>

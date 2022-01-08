@@ -28,4 +28,6 @@ interface Window{
   findTag:(id:string)=>Tag|undefined;
   removeTag:(id:string)=>boolean;
   updateTag:(id:string,name:string)=>'success' | 'not found'| 'duplicated'//等价于TagListModel['update']
+  recordList:RecordItem[];
+  createRecord:(record:RecordItem)=>void;
 }
