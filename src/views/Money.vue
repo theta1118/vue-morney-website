@@ -22,6 +22,7 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component} from 'vue-property-decorator';
+  import store from '@/store/index2.ts';
 
   // const {model} = require('@/model.js');//在ts里面引入js,析构语法
   // console.log(model);
@@ -55,8 +56,8 @@
     components: {Tags,FormItem,Types, NumberPad},
   })
   export default class Money extends Vue{
-      tags = window.tagList;
-      recordList = window.window.recordList;
+      tags = store.tagList;
+      recordList = store.recordList;
       record: RecordItem ={
         tags:[],notes:'',type:'-',amount:0
       };
@@ -69,7 +70,7 @@
     }
 
     saveRecord(){
-      window.createRecord(this.record);
+      store.createRecord(this.record);
       // localStorage.set('recordList',JSON.stringify(this.recordList));
       //把recordList保存到localstorage里面就可以了
       //用JSON.stringify把它序列化一下，把recordList序列化一下，但是这个方法不太好
