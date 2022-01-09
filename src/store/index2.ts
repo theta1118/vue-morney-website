@@ -1,31 +1,13 @@
-import recordListModel from '@/models/recordListModel';
-import tagListModel from '@/models/tagListModel';
+import recordStore from '@/store/recordStore';
+import tagStore from '@/store/tagStore';
 
 const store = {
-  recordList: recordListModel.fetch(),
-  createRecord: (record: RecordItem) => recordListModel.create(record),
-
-  //2 严重依赖 window
+  ...recordStore,//...可以自动引入，直接把数组/函数的引用复制过来（默认都是浅拷贝，直接把地址复制过来），这就是模块化
+  ...tagStore,
 
   //tag store
-  tagList: tagListModel.fetch(),
-  findTag(id: string){
-    return this.tagList.filter(t => t.id === id)[0];
-  },
-  createTag: (name: string) => {
-    const message = tagListModel.create(name);
-    if (message === 'duplicated') {
-      window.alert('标签名重复,请重新输入');
-    } else if (message === 'success') {
-      window.alert('添加成功');
-    }
-  },
-  removeTag: (id: string) => {
-    return tagListModel.remove(id);
-  },
-  updateTag: (id: string, name: string) => {
-    return tagListModel.update(id, name);
-  }
 };
+
+console.log(store);
 
 export default store;

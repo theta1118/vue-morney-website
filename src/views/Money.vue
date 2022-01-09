@@ -22,7 +22,7 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component} from 'vue-property-decorator';
-  import store from '@/store/index2.ts';
+  import store from '@/store/index2';
 
   // const {model} = require('@/model.js');//在ts里面引入js,析构语法
   // console.log(model);
