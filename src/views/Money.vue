@@ -8,7 +8,7 @@
                 placeholder="在这里输入备注"
                 @update:value="onUpdateNotes"/>
     </div>
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+    <Tags/>
 <!--    sync的作用：-->
 <!--    加上.sync这个修饰符，如果你触发了'update:dataSource'-->
 <!--    它就会把你传的数组[...this.dataSource,name])赋值给它之前的 :data-source-->
@@ -22,8 +22,7 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component} from 'vue-property-decorator';
-  import store from '@/store/index2';
-
+  import store from '@/store/index.ts';
   // const {model} = require('@/model.js');//在ts里面引入js,析构语法
   // console.log(model);
 
@@ -54,23 +53,27 @@
 
   @Component({
     components: {Tags,FormItem,Types, NumberPad},
+    //computed会自动计算依赖
+    computed:{
+      recordList(){
+        return this.$store.state.recordList;
+      }
+    }
   })
   export default class Money extends Vue{
-      tags = store.tagList;
-      recordList = store.recordList;
       record: RecordItem ={
         tags:[],notes:'',type:'-',amount:0
       };
+      created(){
+        this.$store.commit('fetchRecords')
+      }
 
-    onUpdateTags(value:string[]){
-       this.record.tags = value;
-    }
     onUpdateNotes(value:string){
         this.record.notes = value;
     }
 
     saveRecord(){
-      store.createRecord(this.record);
+      this.$store.commit('createRecord',this.record);
       // localStorage.set('recordList',JSON.stringify(this.recordList));
       //把recordList保存到localstorage里面就可以了
       //用JSON.stringify把它序列化一下，把recordList序列化一下，但是这个方法不太好
