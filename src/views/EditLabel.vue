@@ -6,9 +6,9 @@
       <span class="rightIcon"/>
     </div>
     <div class="form-wrapper">
-    <FormItem :value="tag.name"
-              @update:value="update"
-              filed-name="标签名" placeholder="请输入标签名"/>
+      <FormItem :value="tag.name"
+                @update:value="update"
+                filed-name="标签名" placeholder="请输入标签名"/>
     </div>
     <div class="button-wrapper">
       <Button @click="remove">删除标签</Button>
@@ -24,31 +24,32 @@ import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
 
 @Component({
-  components: {Button,FormItem}
+  components: {Button, FormItem},
 })
+export default class EditLabel extends Vue {
+  get tag(){
+    return this.$store.state.currentTag;
+  }
 
-export default class EditLabel extends Vue{
-  tag?: Tag = undefined;//?的意思是tag可以为空
-
-  created(){
-    //TODO
-    // this.tag=store.findTag(this.$route.params.id);
-    if(!this.tag){
+  created() {
+    const id = this.$route.params.id;
+    this.$store.commit('setCurrentTag',id);//解耦
+    if (!this.tag) {
       this.$router.replace('/404');//防止用户不能回退，不使用push,使用replace
     }
   }
 
-  update(name:string){
-    if(this.tag){
+  update(name: string) {
+    if (this.tag) {
       //TODO
       // store.updateTag(this.tag.id,name);
     }
   }
 
-  remove(){
-    if(this.tag){
+  remove() {
+    if (this.tag) {
       //TODO
-      return
+      return;
       // if(store.removeTag(this.tag.id)){
       //   this.$router.back();
       // }else{
@@ -57,41 +58,46 @@ export default class EditLabel extends Vue{
     }
   }
 
-  goBack(){
+  goBack() {
     this.$router.back();
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .navBar{
-    text-align: center;
-    font-size: 16px;
-    padding: 12px 16px;
-    background: white;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    >.title{
-
-    }
-    >.leftIcon{
-
-      width:24px;
-      height:24px;
-    }
-    >.rightIcon{
-      width:24px;
-      height:24px;
-    }
-  }
-  .form-wrapper{
+.navBar {
+  text-align: center;
+  font-size: 16px;
+  padding: 12px 16px;
   background: white;
-    margin-top: 8px;
-}
-  .button-wrapper{
-    text-align: center;
-    padding: 16px;
-    margin-top: 44-16px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+
+  > .title {
+
   }
+
+  > .leftIcon {
+
+    width: 24px;
+    height: 24px;
+  }
+
+  > .rightIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.form-wrapper {
+  background: white;
+  margin-top: 8px;
+}
+
+.button-wrapper {
+  text-align: center;
+  padding: 16px;
+  margin-top: 44-16px;
+}
 </style>
