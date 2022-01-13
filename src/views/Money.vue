@@ -2,7 +2,8 @@
   <Layout class-prefix="layout">
     <!--    触发这个submit的点击事件-->
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
-    <Types :value.sync="record.type"/>
+    <Tabs :data-source="recordTypeList"
+          :value.sync="record.type"/>
     <div class="notes">
       <FormItem filed-name="备注"
                 placeholder="在这里输入备注"
@@ -23,6 +24,8 @@ import FormItem from '@/components/Money/FormItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component} from 'vue-property-decorator';
 import store from '@/store/index.ts';
+import recordTypeList from '@/constants/recordTypeList';
+import Tabs from '@/components/Tabs.vue';
 // const {model} = require('@/model.js');//在ts里面引入js,析构语法
 // console.log(model);
 
@@ -52,12 +55,13 @@ import store from '@/store/index.ts';
 
 
 @Component({
-  components: {Tags, FormItem, Types, NumberPad},
+  components: {Tabs, Tags, FormItem, Types, NumberPad},
 })
 export default class Money extends Vue {
   get recordList() {
     return this.$store.state.recordlist;
   }
+  recordTypeList = recordTypeList;
 
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
