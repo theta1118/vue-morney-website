@@ -84,16 +84,16 @@ export default class Money extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.layout-content {
-  display: flex;
-  flex-direction: column-reverse;
-}
+  ::v-deep .layout-content {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 
-.notes {
-  padding: 12px 0;
-}
+  .notes {
+    padding: 12px 0;
+  }
 </style>
 
-<style lang="scss" scoped>
-@import "~@/assets/style/helper.scss";
-</style>
+<!--<style lang="scss" scoped>-->
+<!--@import "~@/assets/style/helper.scss";-->
+<!--</style>-->
