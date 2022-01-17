@@ -7,9 +7,10 @@
     <div class="notes">
       <FormItem filed-name="备注"
                 placeholder="在这里输入备注"
-                @update:value="onUpdateNotes"/>
+                :value.sync="record.notes"
+      />
     </div>
-    <Tags/>
+    <Tags @update:value="record.tags=$event"/>
     <!--    sync的作用：-->
     <!--    加上.sync这个修饰符，如果你触发了'update:dataSource'-->
     <!--    它就会把你传的数组[...this.dataSource,name])赋值给它之前的 :data-source-->
@@ -73,7 +74,14 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
+    if(!this.record.tags || this.record.tags.length===0){
+      return window.alert('请至少选择一个标签');
+    }
     this.$store.commit('createRecord', this.record);
+    if(this.$store.state.createRecordError === null){
+      window.alert('已保存');
+      this.record.notes = '';
+    }
     // localStorage.set('recordList',JSON.stringify(this.recordList));
     //把recordList保存到localstorage里面就可以了
     //用JSON.stringify把它序列化一下，把recordList序列化一下，但是这个方法不太好
