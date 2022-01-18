@@ -28,6 +28,7 @@ window.onload = function (){
   },0);
 };
 
+// 二维码弹窗提示
 // if(document.documentElement.clientWidth > 500){
 //   window.alert('请使用手机来打开本页面，以保证浏览效果');
 //   const img = document.createElement('img');

@@ -112,7 +112,7 @@
         background: darken($bg,4*5%);
       }
       &:nth-child(12){
-        background: darken($bg,4*6%);
+        background: #f9db61;
       }
     }
   }

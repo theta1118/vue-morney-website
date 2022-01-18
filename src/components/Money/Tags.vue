@@ -60,18 +60,18 @@
     display: flex;
     flex-wrap: wrap;
     > li{
-      $bg: #d9d9d9;
+      $bg: #f6f6f6;
       background: $bg;
       $h: 24px;
-      height:$h;
-      line-height:$h;
+      height: $h;
+      line-height: $h;
       border-radius: $h/2;
       padding: 0 16px;
       margin-right: 12px;
       margin-top: 4px;
       &.selected{
-        background: darken($bg,50%);
-        color:white;
+        background: #fcd63d;
+        color:#505050;
       }
     }
   }

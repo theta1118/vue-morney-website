@@ -21,7 +21,7 @@ export default class Button extends Vue{
   border-radius: 4px;
   border:none;
   height:30px;
-  padding: 0 16px;
+  padding: 0 12px;
   &-wrapper{
     text-align: center;
     padding: 16px;
