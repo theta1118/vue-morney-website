@@ -8,8 +8,7 @@
       <FormItem filed-name="日期"
                 type="date"
                 placeholder="在这里输入日期"
-                :value.sync="record.createdAt"
-      />
+                :value.sync="record.createdAt"/>
     </div>
     <div class="notes">
       <FormItem filed-name="备注"
@@ -66,10 +65,11 @@ export default class Money extends Vue {
   get recordList() {
     return this.$store.state.recordlist;
   }
+
   recordTypeList = recordTypeList;
 
   record: RecordItem = {
-    tags: [], notes: '', type: '-', amount: 0,createdAt:new Date().toISOString()
+    tags: [], notes: '', type: '-', amount: 0, createdAt: new Date().toISOString()
   };
 
   created() {
@@ -81,11 +81,11 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    if(!this.record.tags || this.record.tags.length===0){
+    if (!this.record.tags || this.record.tags.length === 0) {
       return window.alert('请至少选择一个标签');
     }
     this.$store.commit('createRecord', this.record);
-    if(this.$store.state.createRecordError === null){
+    if (this.$store.state.createRecordError === null) {
       window.alert('已保存');
       this.record.notes = '';
     }
@@ -99,14 +99,14 @@ export default class Money extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  ::v-deep .layout-content {
-    display: flex;
-    flex-direction: column-reverse;
-  }
+::v-deep .layout-content {
+  display: flex;
+  flex-direction: column-reverse;
+}
 
-  .notes {
-    padding: 12px 0;
-  }
+.notes {
+  padding: 12px 0;
+}
 </style>
 
 <!--<style lang="scss" scoped>-->
