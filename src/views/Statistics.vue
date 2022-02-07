@@ -44,7 +44,7 @@ export default class Statistics extends Vue {
 
   mounted() {
     const div = (this.$refs.chartWrapper as HTMLDivElement);
-    div.scrollLeft = div.scrollWidth;
+    div.scrollLeft = 9999;
   }
 
   beautify(string: string) {
