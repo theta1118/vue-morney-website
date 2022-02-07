@@ -6,7 +6,6 @@
   import {Component, Prop, Vue} from 'vue-property-decorator';
   import echarts, {EChartsOption} from 'echarts';
 
-
   @Component
   export default class Chart extends Vue {
     @Prop() options?: EChartsOption;
