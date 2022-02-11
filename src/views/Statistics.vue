@@ -2,7 +2,7 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
     <div class="chart-wrapper" ref="chartWrapper">
-      <Chart class="chart" :options="x"/>
+      <Chart class="chart" :options="chartOptions"/>
     </div>
     <ol v-if="groupedList.length>0">
       <li v-for="(group,index) in groupedList" :key="index">
@@ -32,6 +32,8 @@ import recordTypeList from '@/constants/recordTypeList';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
 import Chart from '@/components/Chart.vue';
+import _ from 'lodash';
+import day from 'dayjs';
 
 @Component({
   components: {Tabs, Chart},
@@ -44,7 +46,7 @@ export default class Statistics extends Vue {
 
   mounted() {
     const div = (this.$refs.chartWrapper as HTMLDivElement);
-    div.scrollLeft = 9999;
+    div.scrollLeft = div.scrollWidth;
   }
 
   beautify(string: string) {
@@ -53,7 +55,6 @@ export default class Statistics extends Vue {
     if (day.isSame(now, 'day')) {
       return '今天';
     } else if (day.isSame(now.subtract(1, 'day'), 'day')) {
-      console.log('hi');
       return '昨天';
     } else if (day.isSame(now.subtract(2, 'day'), 'day')) {
       return '前天';
@@ -64,7 +65,35 @@ export default class Statistics extends Vue {
     }
   }
 
-  get x() {
+  get keyValueList() {
+    const today = new Date();
+    const array = [];
+    for (let i = 0; i <= 29; i++) {
+      //this.recordList = [{date:7.3,value:100},{date:7.4,value:200}]
+      const dateString = day(today)
+        .subtract(i, 'day').format('YYYY-MM-DD');
+      const found = _.find(this.groupedList, {
+        title: dateString
+      });
+      array.push({
+        key: dateString, value: found ? found.total : 0
+      });
+    }
+    array.sort((a, b) => {
+      if (a.key > b.key) {
+        return 1;
+      } else if (a.key === b.key) {
+        return 0;
+      } else {
+        return -1;
+      }
+    });
+    return array;
+  }
+
+  get chartOptions() {
+    const keys = this.keyValueList.map(item => item.key);
+    const values = this.keyValueList.map(item => item.value);
     return {
       grid: {
         left: 0,
@@ -72,9 +101,14 @@ export default class Statistics extends Vue {
       },
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        data: keys,
         axisTick: {alignWithLabel: true},
-        axisLine: {lineStyle: {color: '#666'}}
+        axisLine: {lineStyle: {color: '#666'}},
+        axisLabel: {
+          formatter: function (value: string, index: number) {
+            return value.substr(5);
+          }
+        }
       },
       yAxis: {
         type: 'value',
@@ -83,8 +117,8 @@ export default class Statistics extends Vue {
       series: [{
         symbol: 'circle',
         symbolSize: 12,
-        itemStyle: {borderWidth: 1, color: '#666'},
-        data: [150, 230, 224, 218, 135, 147, 260],
+        itemStyle: {borderWidth: 1, color: '#666',borderColor:'#666'},
+        data: values,
         type: 'line'
       }],
       tooltip: {
@@ -119,8 +153,10 @@ export default class Statistics extends Vue {
         result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'), items: [current]});
       }
     }
-    result.forEach(group => {
-      group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+    result.map(group => {
+      group.total = group.items.reduce((sum, item) => {
+        return sum + item.amount;
+      }, 0);
     });
     return result;
   }
