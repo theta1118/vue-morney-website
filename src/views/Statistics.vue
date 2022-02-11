@@ -117,7 +117,7 @@ export default class Statistics extends Vue {
       series: [{
         symbol: 'circle',
         symbolSize: 12,
-        itemStyle: {borderWidth: 1, color: '#666',borderColor:'#666'},
+        itemStyle: {borderWidth: 1, color: '#666', borderColor: '#666'},
         data: values,
         type: 'line'
       }],
@@ -135,7 +135,6 @@ export default class Statistics extends Vue {
 
   get groupedList() {
     const {recordList} = this;
-
     const newList = clone(recordList)
       .filter(r => r.type === this.type)
       .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
@@ -161,7 +160,7 @@ export default class Statistics extends Vue {
     return result;
   }
 
-  mounted() {
+  beforeCreated() {
     this.$store.commit('fetchRecords');
   }
 
