@@ -10,7 +10,6 @@ import echarts, {EChartOption, ECharts} from 'echarts';
 export default class Chart extends Vue {
   @Prop() options?: EChartsOption;
   chart?: Echarts;
-
   mounted() {
     if (this.options === undefined) {
       return console.error('options 为空');
